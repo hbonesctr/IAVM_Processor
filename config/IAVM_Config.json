@@ -1,0 +1,102 @@
+{
+  "Version": "2.1",
+  "LastUpdated": "2026-01-27 16:30:00",
+  "PatchSchedule": [
+    {
+      "Month": "January",
+      "PatchTuesday": "January 13, 2026",
+      "PriorityIAVM": "January 15, 2026",
+      "TRB": "January 20, 2026",
+      "PatchDay": "January 22, 2026",
+      "ScanDay": "January 25, 2026"
+    },
+    {
+      "Month": "February",
+      "PatchTuesday": "February 10, 2026",
+      "PriorityIAVM": "February 12, 2026",
+      "TRB": "February 17, 2026",
+      "PatchDay": "February 19, 2026",
+      "ScanDay": "February 25, 2026"
+    },
+    {
+      "Month": "March",
+      "PatchTuesday": "March 10, 2026",
+      "PriorityIAVM": "March 12, 2026",
+      "TRB": "March 17, 2026",
+      "PatchDay": "March 19, 2026",
+      "ScanDay": "March 25, 2026"
+    },
+    {
+      "Month": "April",
+      "PatchTuesday": "April 14, 2026",
+      "PriorityIAVM": "April 16, 2026",
+      "TRB": "April 21, 2026",
+      "PatchDay": "April 23, 2026",
+      "ScanDay": "April 25, 2026"
+    },
+    {
+      "Month": "May",
+      "PatchTuesday": "May 12, 2026",
+      "PriorityIAVM": "May 14, 2026",
+      "TRB": "May 19, 2026",
+      "PatchDay": "May 21, 2026",
+      "ScanDay": "May 25, 2026"
+    },
+    {
+      "Month": "June",
+      "PatchTuesday": "June 9, 2026",
+      "PriorityIAVM": "June 11, 2026",
+      "TRB": "June 16, 2026",
+      "PatchDay": "June 18, 2026",
+      "ScanDay": "June 25, 2026"
+    },
+    {
+      "Month": "July",
+      "PatchTuesday": "July 14, 2026",
+      "PriorityIAVM": "July 16, 2026",
+      "TRB": "July 21, 2026",
+      "PatchDay": "July 23, 2026",
+      "ScanDay": "July 25, 2026"
+    },
+    {
+      "Month": "August",
+      "PatchTuesday": "August 11, 2026",
+      "PriorityIAVM": "August 13, 2026",
+      "TRB": "August 18, 2026",
+      "PatchDay": "August 20, 2026",
+      "ScanDay": "August 25, 2026"
+    },
+    {
+      "Month": "September",
+      "PatchTuesday": "September 8, 2026",
+      "PriorityIAVM": "September 10, 2026",
+      "TRB": "September 15, 2026",
+      "PatchDay": "September 17, 2026",
+      "ScanDay": "September 25, 2026"
+    },
+    {
+      "Month": "October",
+      "PatchTuesday": "October 13, 2026",
+      "PriorityIAVM": "October 15, 2026",
+      "TRB": "October 20, 2026",
+      "PatchDay": "October 22, 2026",
+      "ScanDay": "October 25, 2026"
+    },
+    {
+      "Month": "November",
+      "PatchTuesday": "November 10, 2026",
+      "PriorityIAVM": "November 12, 2026",
+      "TRB": "November 17, 2026",
+      "PatchDay": "November 19, 2026",
+      "ScanDay": "November 25, 2026"
+    },
+    {
+      "Month": "December",
+      "PatchTuesday": "December 8, 2026",
+      "PriorityIAVM": "December 10, 2026",
+      "TRB": "December 15, 2026",
+      "PatchDay": "December 17, 2026",
+      "ScanDay": "December 25, 2026"
+    }
+  ]
+}
