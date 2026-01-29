@@ -1,0 +1,180 @@
+# IAVM Processor .gitignore
+# Author: Hector L. Bones
+
+# ========================================
+# User-specific files and directories
+# ========================================
+
+# Configuration files with user customizations
+IAVM_Config.json
+
+# Output directories
+**/IAVM_Output/
+C:/Temp/IAVM_Output/
+/output/
+/outputs/
+
+# User-specific test files
+test_*.xml
+test_*.zip
+sample_*.xml
+
+# ========================================
+# Windows
+# ========================================
+
+# Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Windows shortcuts
+*.lnk
+
+# ========================================
+# PowerShell
+# ========================================
+
+# PowerShell module cache
+*.psm1.cache
+
+# PowerShell transcript logs
+PowerShell_transcript.*.txt
+
+# ========================================
+# Office temporary files
+# ========================================
+
+# Word
+~$*.doc*
+~$*.docx
+
+# Excel
+~$*.xls*
+~$*.xlsx
+
+# PowerPoint
+~$*.ppt*
+~$*.pptx
+
+# Office temporary files
+*.tmp
+
+# ========================================
+# Backup files
+# ========================================
+
+*.bak
+*.backup
+*~
+*.old
+*.orig
+
+# ========================================
+# Archives
+# ========================================
+
+# Don't track extracted IAVM files
+*.xml.bak
+*.zip.bak
+
+# ========================================
+# Logs
+# ========================================
+
+*.log
+logs/
+*.log.*
+
+# ========================================
+# Development
+# ========================================
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Debug output
+debug/
+Debug/
+debug.txt
+
+# ========================================
+# Git
+# ========================================
+
+# Git attributes
+# .gitattributes should be tracked, so this is commented out
+# .gitattributes
+
+# ========================================
+# macOS
+# ========================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ========================================
+# Linux
+# ========================================
+
+*~
+.directory
+
+# ========================================
+# Project specific
+# ========================================
+
+# User's actual IAVM XML files (contain security data)
+/IAVMs/*.xml
+/IAVMs/*.zip
+
+# User's actual CSV outputs (may contain sensitive info)
+*.csv
+
+# User-modified configs
+*_custom.json
+*_local.json
+
+# Test outputs
+test_output/
+testing/
+
+# Documentation builds (if we add any)
+/docs/build/
+/docs/_build/
+
+# Version-specific builds
+/builds/
+/releases/
+
+# ========================================
+# Exceptions - Files to ALWAYS include
+# ========================================
+
+# Keep sample/template files
+!config/IAVM_Config.json
+!examples/**/*.csv
+!examples/**/*.xml
+
+# Keep documentation examples
+!docs/examples/*.csv
+!docs/screenshots/*.png
+
+# ========================================
+# Notes
+# ========================================
+
+# Personal notes that shouldn't be committed
+NOTES.txt
+TODO.txt
+PRIVATE.md
