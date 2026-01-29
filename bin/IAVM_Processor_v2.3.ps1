@@ -3,7 +3,7 @@
 # Date: 2026-01-28
 # IAVM Processor v2.3
 # PowerShell 5.1 Compatible
-# NEW in v2.3: IAVA/IAVB Type extraction, STIG Compliance tab with editable schedule
+# NEW in v2.3: IAVA/IAVB Type extraction, STIG Compliance tab with editable 5-phase schedule
 # NEW in v2.2: Intelligent Status field based on publication date (New/Prior/Historical/Aged)
 # NEW in v2.1: Fixed CSV serialization, improved readability, added About tab
 # NEW in v2.0: User-editable schedule with persistence, fixed character encoding
@@ -46,15 +46,16 @@ function Load-Configuration {
                 }
             }
             
-            # Convert JSON objects back to PSCustomObjects - STIG Schedule
+            # Convert JSON objects back to PSCustomObjects - STIG Schedule (5-Phase)
             $Global:STIGSchedule = @()
             if ($config.STIGSchedule) {
                 foreach ($quarter in $config.STIGSchedule) {
                     $Global:STIGSchedule += [PSCustomObject]@{
                         Quarter = $quarter.Quarter
-                        Release = $quarter.Release
-                        TRB = $quarter.TRB
-                        BenchmarkDue = $quarter.BenchmarkDue
+                        ReleaseDate = $quarter.ReleaseDate
+                        TRBDate = $quarter.TRBDate
+                        POAMReview = $quarter.POAMReview
+                        ImplementationDue = $quarter.ImplementationDue
                         ReviewComplete = $quarter.ReviewComplete
                     }
                 }
@@ -128,13 +129,13 @@ function Load-DefaultPatchSchedule {
     )
 }
 
-# Function to load default STIG schedule
+# Function to load default STIG schedule (5-Phase Lifecycle)
 function Load-DefaultSTIGSchedule {
     $Global:STIGSchedule = @(
-        [PSCustomObject]@{Quarter="Q1"; Release="January 31, 2026"; TRB="February 24, 2026"; BenchmarkDue="March 17, 2026"; ReviewComplete="April 15, 2026"},
-        [PSCustomObject]@{Quarter="Q2"; Release="April 30, 2026"; TRB="May 26, 2026"; BenchmarkDue="June 15, 2026"; ReviewComplete="July 15, 2026"},
-        [PSCustomObject]@{Quarter="Q3"; Release="July 31, 2026"; TRB="August 25, 2026"; BenchmarkDue="September 15, 2026"; ReviewComplete="October 15, 2026"},
-        [PSCustomObject]@{Quarter="Q4"; Release="October 31, 2026"; TRB="November 24, 2026"; BenchmarkDue="December 15, 2026"; ReviewComplete="January 15, 2027"}
+        [PSCustomObject]@{Quarter="Q1"; ReleaseDate="January 31, 2026"; TRBDate="February 15, 2026"; POAMReview="February 28, 2026"; ImplementationDue="March 17, 2026"; ReviewComplete="April 15, 2026"},
+        [PSCustomObject]@{Quarter="Q2"; ReleaseDate="April 30, 2026"; TRBDate="May 15, 2026"; POAMReview="May 30, 2026"; ImplementationDue="June 16, 2026"; ReviewComplete="July 15, 2026"},
+        [PSCustomObject]@{Quarter="Q3"; ReleaseDate="July 31, 2026"; TRBDate="August 15, 2026"; POAMReview="August 30, 2026"; ImplementationDue="September 16, 2026"; ReviewComplete="October 15, 2026"},
+        [PSCustomObject]@{Quarter="Q4"; ReleaseDate="October 31, 2026"; TRBDate="November 15, 2026"; POAMReview="November 30, 2026"; ImplementationDue="December 17, 2026"; ReviewComplete="January 15, 2027"}
     )
 }
 
@@ -329,8 +330,8 @@ function Open-ScheduleEditor {
 function Open-STIGScheduleEditor {
     # Create editor form
     $editorForm = New-Object System.Windows.Forms.Form
-    $editorForm.Text = "Edit STIG Compliance Schedule"
-    $editorForm.Size = New-Object System.Drawing.Size(900, 450)
+    $editorForm.Text = "Edit STIG Compliance Schedule (5-Phase Lifecycle)"
+    $editorForm.Size = New-Object System.Drawing.Size(1100, 450)
     $editorForm.StartPosition = "CenterParent"
     $editorForm.FormBorderStyle = "FixedDialog"
     $editorForm.MaximizeBox = $false
@@ -339,50 +340,55 @@ function Open-STIGScheduleEditor {
     # Instructions label
     $lblInstructions = New-Object System.Windows.Forms.Label
     $lblInstructions.Location = New-Object System.Drawing.Point(20, 15)
-    $lblInstructions.Size = New-Object System.Drawing.Size(850, 40)
-    $lblInstructions.Text = "Edit the STIG compliance schedule dates below. Format: 'Month DD, YYYY' (e.g., January 31, 2026)`nChanges are saved automatically when you click OK."
+    $lblInstructions.Size = New-Object System.Drawing.Size(1050, 40)
+    $lblInstructions.Text = "Edit the 5-phase STIG compliance schedule dates below. Format: 'Month DD, YYYY' (e.g., January 31, 2026)`nChanges are saved automatically when you click OK."
     $editorForm.Controls.Add($lblInstructions)
     
     # Create DataGridView for schedule editing
     $dgv = New-Object System.Windows.Forms.DataGridView
     $dgv.Location = New-Object System.Drawing.Point(20, 60)
-    $dgv.Size = New-Object System.Drawing.Size(850, 250)
+    $dgv.Size = New-Object System.Drawing.Size(1050, 250)
     $dgv.AllowUserToAddRows = $false
     $dgv.AllowUserToDeleteRows = $false
     $dgv.SelectionMode = "FullRowSelect"
     $dgv.MultiSelect = $false
     $dgv.AutoSizeColumnsMode = "Fill"
     
-    # Add columns
+    # Add columns for 5-phase lifecycle
     $colQuarter = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
     $colQuarter.HeaderText = "Quarter"
     $colQuarter.ReadOnly = $true
-    $colQuarter.Width = 80
+    $colQuarter.Width = 70
     $dgv.Columns.Add($colQuarter)
     
     $colRelease = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
-    $colRelease.HeaderText = "STIG Release"
-    $colRelease.Width = 180
+    $colRelease.HeaderText = "Release (T+0)"
+    $colRelease.Width = 150
     $dgv.Columns.Add($colRelease)
     
     $colTRB = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
-    $colTRB.HeaderText = "Deep Dive TRB"
-    $colTRB.Width = 180
+    $colTRB.HeaderText = "TRB (T+15)"
+    $colTRB.Width = 150
     $dgv.Columns.Add($colTRB)
     
-    $colBenchmark = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
-    $colBenchmark.HeaderText = "Benchmark Due"
-    $colBenchmark.Width = 180
-    $dgv.Columns.Add($colBenchmark)
+    $colPOAM = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
+    $colPOAM.HeaderText = "POA&M (T+30)"
+    $colPOAM.Width = 150
+    $dgv.Columns.Add($colPOAM)
+    
+    $colImplementation = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
+    $colImplementation.HeaderText = "Impl Due (T+45)"
+    $colImplementation.Width = 150
+    $dgv.Columns.Add($colImplementation)
     
     $colReview = New-Object System.Windows.Forms.DataGridViewTextBoxColumn
-    $colReview.HeaderText = "Review Complete"
-    $colReview.Width = 180
+    $colReview.HeaderText = "Review (T+75)"
+    $colReview.Width = 150
     $dgv.Columns.Add($colReview)
     
     # Populate with current schedule
     foreach ($quarter in $Global:STIGSchedule) {
-        $row = @($quarter.Quarter, $quarter.Release, $quarter.TRB, $quarter.BenchmarkDue, $quarter.ReviewComplete)
+        $row = @($quarter.Quarter, $quarter.ReleaseDate, $quarter.TRBDate, $quarter.POAMReview, $quarter.ImplementationDue, $quarter.ReviewComplete)
         $dgv.Rows.Add($row)
     }
     
@@ -390,22 +396,22 @@ function Open-STIGScheduleEditor {
     
     # Buttons
     $btnOK = New-Object System.Windows.Forms.Button
-    $btnOK.Location = New-Object System.Drawing.Point(570, 330)
+    $btnOK.Location = New-Object System.Drawing.Point(750, 330)
     $btnOK.Size = New-Object System.Drawing.Size(90, 30)
     $btnOK.Text = "OK"
     $btnOK.DialogResult = [System.Windows.Forms.DialogResult]::OK
     $editorForm.Controls.Add($btnOK)
     
     $btnCancel = New-Object System.Windows.Forms.Button
-    $btnCancel.Location = New-Object System.Drawing.Point(670, 330)
+    $btnCancel.Location = New-Object System.Drawing.Point(850, 330)
     $btnCancel.Size = New-Object System.Drawing.Size(90, 30)
     $btnCancel.Text = "Cancel"
     $btnCancel.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
     $editorForm.Controls.Add($btnCancel)
     
     $btnReset = New-Object System.Windows.Forms.Button
-    $btnReset.Location = New-Object System.Drawing.Point(770, 330)
-    $btnReset.Size = New-Object System.Drawing.Size(100, 30)
+    $btnReset.Location = New-Object System.Drawing.Point(950, 330)
+    $btnReset.Size = New-Object System.Drawing.Size(120, 30)
     $btnReset.Text = "Reset to Defaults"
     $btnReset.Add_Click({
         $result = [System.Windows.Forms.MessageBox]::Show(
@@ -441,10 +447,11 @@ function Open-STIGScheduleEditor {
             $quarter = $row.Cells[0].Value
             
             $dates = @{
-                "STIG Release" = $row.Cells[1].Value
-                "Deep Dive TRB" = $row.Cells[2].Value
-                "Benchmark Due" = $row.Cells[3].Value
-                "Review Complete" = $row.Cells[4].Value
+                "Release Date" = $row.Cells[1].Value
+                "TRB Date" = $row.Cells[2].Value
+                "POA&M Review" = $row.Cells[3].Value
+                "Implementation Due" = $row.Cells[4].Value
+                "Review Complete" = $row.Cells[5].Value
             }
             
             $validDates = @{}
@@ -460,12 +467,13 @@ function Open-STIGScheduleEditor {
                 }
             }
             
-            if ($validDates.Count -eq 4) {
+            if ($validDates.Count -eq 5) {
                 $newSchedule += [PSCustomObject]@{
                     Quarter = $quarter
-                    Release = $validDates["STIG Release"]
-                    TRB = $validDates["Deep Dive TRB"]
-                    BenchmarkDue = $validDates["Benchmark Due"]
+                    ReleaseDate = $validDates["Release Date"]
+                    TRBDate = $validDates["TRB Date"]
+                    POAMReview = $validDates["POA&M Review"]
+                    ImplementationDue = $validDates["Implementation Due"]
                     ReviewComplete = $validDates["Review Complete"]
                 }
             }
@@ -1013,42 +1021,68 @@ function Display-STIGSchedule {
     $stigText = @"
 ================================================================
             DISA STIG COMPLIANCE CALENDAR - 2026
-        Security Configuration Technical Review Lifecycle
+        Security Configuration 5-Phase Review Lifecycle
 ================================================================
 
-QUARTERLY STIG LIFECYCLE OVERVIEW
+QUARTERLY STIG LIFECYCLE OVERVIEW (5-Phase, 75-Day Model)
 ----------------------------------------------------------------
-Each STIG release follows a 4-phase, 75-day lifecycle:
+Each STIG release follows a structured 5-phase, 75-day lifecycle:
 
-  Phase 1 (T+0 to T+30):  Release & Initial Assessment
-  Phase 2 (T+30 to T+45): TRB Approval & Benchmark Creation
-  Phase 3 (T+45 to T+75): SME Deep Dive & Implementation
-  Phase 4 (Ongoing):      90-Day Continuous Compliance
+  Phase 1 (T+0 to T+15):  Release & Initial Assessment
+     Phase 1a: Create or Update Benchmarks to New Checklist
+     Phase 1b: Review Open Findings and Update Finding Notes
+
+  Phase 2 (T+15 to T+30): TRB Approval for Changes
+     Present Changes to Technical Review Board
+     Obtain Approvals for Implementation Plan
+
+  Phase 3 (T+30 to T+45): Plan of Actions & Milestones Review
+     New Benchmark Creation
+     Create New POA&Ms
+     Update Existing POA&Ms
+
+  Phase 4 (T+45 to T+75): SME Deep Dive & Implementation
+     Full Configuration Review Against New Benchmark
+     System Hardening Implementation
+     Compliance Validation
+
+  Phase 5 (Ongoing):      90-Day Continuous Compliance
+     Regular Configuration Reviews
+     Deviation Tracking
+     Remediation of Findings
+     Continuous Monitoring
 
 
 "@
     
     foreach ($quarter in $Global:STIGSchedule) {
         $stigText += @"
-$($quarter.Quarter) LIFECYCLE
+$($quarter.Quarter) LIFECYCLE (5-Phase Implementation)
 ----------------------------------------------------------------
-  $($quarter.Release)
-    DISA releases $($quarter.Quarter) STIG package
-    SMEs begin initial analysis
+  $($quarter.ReleaseDate)
+    DISA releases $($quarter.Quarter) STIG package (Phase 1 Start)
+    SMEs begin initial assessment
+    Benchmarks created/updated
 
-  $($quarter.TRB) (4th Tuesday)
-    STIG Deep Dive TRB
-    SMEs present findings
+  $($quarter.TRBDate) (Phase 2)
+    STIG TRB Meeting - Approval for Changes
     Board approves implementation plan
+    Resource allocation confirmed
 
-  $($quarter.BenchmarkDue) (T+45)
-    New STIG Benchmark Due
-    Updated template established
+  $($quarter.POAMReview) (Phase 3)
+    POA&M Review Complete
+    New benchmarks finalized
+    POA&Ms created/updated
 
-  $($quarter.ReviewComplete) (T+60-75)
+  $($quarter.ImplementationDue) (Phase 4)
+    SME Deep Dive & Implementation Due
+    System hardening completed
+    Compliance validation performed
+
+  $($quarter.ReviewComplete) (Phase 5 Start)
     $($quarter.Quarter) STIG Review Complete
     All systems aligned with new benchmark
-    90-day review cycle begins
+    90-day continuous compliance begins
 
 
 "@
@@ -1058,33 +1092,51 @@ $($quarter.Quarter) LIFECYCLE
 INTEGRATION WITH PATCH CYCLE
 ----------------------------------------------------------------
   Monthly Patch & IAVM TRB:  3rd Tuesday (Tactical)
-  Quarterly STIG Deep Dive:  4th Tuesday (Strategic)
+  Quarterly STIG TRB:        Mid-month following release (Strategic)
 
-  Note: STIG TRBs are held the month AFTER the quarterly
-        release to allow 30 days for initial assessment.
+  Note: STIG TRBs are scheduled to allow 15 days for initial
+        assessment (Phase 1) before presenting to the board.
 
 
-KEY DATES SUMMARY - 2026
+KEY DATES SUMMARY - 2026 (5-Phase Model)
 ----------------------------------------------------------------
-  STIG Deep Dive TRBs (4th Tuesday):
+  STIG Release Dates (Phase 1 - T+0):
 "@
     
     foreach ($quarter in $Global:STIGSchedule) {
-        $stigText += "    $($quarter.TRB.PadRight(20)) ($($quarter.Quarter) Review)`n"
+        $stigText += "    $($quarter.ReleaseDate.PadRight(20)) ($($quarter.Quarter) Release)`n"
     }
     
     $stigText += @"
 
-  New Benchmark Due Dates (T+45):
+  TRB Approval Dates (Phase 2 - T+15):
 "@
     
     foreach ($quarter in $Global:STIGSchedule) {
-        $stigText += "    $($quarter.BenchmarkDue.PadRight(20)) ($($quarter.Quarter) Benchmark)`n"
+        $stigText += "    $($quarter.TRBDate.PadRight(20)) ($($quarter.Quarter) TRB)`n"
     }
     
     $stigText += @"
 
-  Review Completion Dates (T+60-75):
+  POA&M Review Dates (Phase 3 - T+30):
+"@
+    
+    foreach ($quarter in $Global:STIGSchedule) {
+        $stigText += "    $($quarter.POAMReview.PadRight(20)) ($($quarter.Quarter) POA&M)`n"
+    }
+    
+    $stigText += @"
+
+  Implementation Due Dates (Phase 4 - T+45):
+"@
+    
+    foreach ($quarter in $Global:STIGSchedule) {
+        $stigText += "    $($quarter.ImplementationDue.PadRight(20)) ($($quarter.Quarter) Implementation)`n"
+    }
+    
+    $stigText += @"
+
+  Review Completion Dates (Phase 5 - T+75):
 "@
     
     foreach ($quarter in $Global:STIGSchedule) {
@@ -1097,6 +1149,8 @@ KEY DATES SUMMARY - 2026
 ================================================================
    For questions about STIG compliance, consult with your
    Information Assurance team or Security Configuration SMEs.
+   
+   Author: Hector L. Bones | Version: 2.3.0
 ================================================================
 "@
     
