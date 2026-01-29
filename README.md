@@ -12,12 +12,12 @@ A PowerShell-based tool designed for Information Assurance professionals to stre
 
 ## 🎯 Overview
 
-The **IAVM Processor v2.3** is a comprehensive Windows Forms application that combines two critical DoD cybersecurity workflows:
+The **IAVM Processor v2.3** is a comprehensive Windows Forms application that combines two critical Cybersecurity workflows:
 
 - **IAVM Processing**: Automated parsing and classification of DISA Information Assurance Vulnerability Management bulletins
 - **STIG Compliance**: Quarterly tracking of Security Technical Implementation Guide lifecycle phases
 
-This tool eliminates manual spreadsheet management, provides intelligent vulnerability classification, and integrates seamlessly with existing DoD cybersecurity operations.
+This tool eliminates manual spreadsheet management, provides intelligent vulnerability classification, and integrates seamlessly with existing Cybersecurity operations.
 
 ---
 
