@@ -305,17 +305,6 @@ See `CHANGELOG.md` for complete version history.
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! This tool is designed for the DoD IA community. If you have suggestions, bug reports, or feature requests:
-
-1. **Open an Issue** describing your suggestion or problem
-2. **Fork the repository** if you want to contribute code
-3. **Submit a Pull Request** with clear description of changes
-4. **Follow PowerShell best practices** for code contributions
-
----
-
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -324,7 +313,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-Created for Information Assurance professionals managing DISA IAVM processing and STIG compliance workflows.
+Hector L. Bones
 
 ---
 
