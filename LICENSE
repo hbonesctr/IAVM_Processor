@@ -19,3 +19,27 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+DISCLAIMER:
+
+This tool is provided for use by Department of Defense (DoD) Information 
+Assurance professionals and cybersecurity practitioners. While designed to 
+assist with DISA IAVM processing and STIG compliance tracking, users are 
+responsible for:
+
+1. Verifying all tool outputs against authoritative DISA sources
+2. Ensuring compliance with their organization's cybersecurity policies
+3. Following appropriate approval processes for tool deployment
+4. Protecting sensitive or classified information processed by the tool
+5. Meeting all applicable DoD and organizational security requirements
+
+This tool does not replace official DISA guidance, organizational security 
+requirements, or professional judgment. Users should validate all results 
+and maintain appropriate oversight of vulnerability management and compliance 
+activities.
+
+The authors and contributors assume no liability for decisions made based on 
+this tool's output or for any consequences of the tool's use in operational 
+environments.
