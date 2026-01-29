@@ -12,12 +12,12 @@ A PowerShell-based tool designed for Information Assurance professionals to stre
 
 ## 🎯 Overview
 
-The **IAVM Processor v2.3** is a comprehensive Windows Forms application that combines two critical Cybersecurity workflows:
+The **IAVM Processor v2.3** is a comprehensive Windows Forms application that combines two critical cybersecurity workflows:
 
 - **IAVM Processing**: Automated parsing and classification of DISA Information Assurance Vulnerability Management bulletins
-- **STIG Compliance**: Quarterly tracking of Security Technical Implementation Guide lifecycle phases
+- **STIG Compliance**: Quarterly tracking of Security Technical Implementation Guide 5-phase lifecycle
 
-This tool eliminates manual spreadsheet management, provides intelligent vulnerability classification, and integrates seamlessly with existing Cybersecurity operations.
+This tool eliminates manual spreadsheet management, provides intelligent vulnerability classification, and integrates seamlessly with existing cybersecurity operations.
 
 ---
 
@@ -37,10 +37,10 @@ This tool eliminates manual spreadsheet management, provides intelligent vulnera
 - 📊 **TRB Integration** - Tracks Patch Tuesday, Priority IAVMs, TRB meetings, and scan dates
 
 ### STIG Compliance Tracking
-- 📋 **Quarterly Lifecycle** - Manages 75-day STIG implementation phases
-- 🗓️ **4-Phase Framework** - Release, TRB, Benchmark, Implementation tracking
+- 📋 **Quarterly Lifecycle** - Manages 5-phase, 75-day STIG implementation
+- 🗓️ **5-Phase Framework** - Release, TRB, POA&M, Implementation, Continuous Compliance
 - ⚙️ **Customizable Timelines** - Edit STIG schedule with visual editor
-- 🔄 **Continuous Compliance** - Phase 4 ongoing review tracking
+- 🔄 **Continuous Compliance** - Phase 5 ongoing review tracking
 
 ### User Experience
 - 🖥️ **Native Windows GUI** - No Python, no third-party dependencies
@@ -165,8 +165,9 @@ The tool uses `IAVM_Config.json` to persist settings:
     {
       "Quarter": "Q1",
       "ReleaseDate": "2026-01-31",
-      "TRBDate": "2026-02-24",
-      "BenchmarkDue": "2026-03-17",
+      "TRBDate": "2026-02-15",
+      "POAMReview": "2026-02-28",
+      "ImplementationDue": "2026-03-17",
       "ReviewComplete": "2026-04-15"
     }
     // ... Q2, Q3, Q4
@@ -218,17 +219,35 @@ Week 3: [TRB Meeting] → [Patch Implementation]
 Week 4: [Compliance Scan] → Monthly reporting
 ```
 
-### Quarterly STIG Cycle
-```
-Phase 1 (30 days): STIG Release → Gap Analysis
-Phase 2 (15 days): TRB Meeting → Benchmark Creation
-Phase 3 (30 days): Implementation → Validation
-Phase 4 (Ongoing): Continuous Compliance Reviews
-```
+### Quarterly STIG Cycle (5-Phase, 75-Day Lifecycle)
+
+**Phase 1 (T+0 to T+15): Release & Initial Assessment**
+- Phase 1a: Create or Update Current Benchmarks to New Checklist
+- Phase 1b: Review Open findings and update Finding Notes
+
+**Phase 2 (T+15 to T+30): TRB Approval for Changes**
+- Present changes to Technical Review Board
+- Obtain approvals for implementation plan
+
+**Phase 3 (T+30 to T+45): Plan of Actions & Milestones Review**
+- New Benchmark Creation
+- Create New POA&Ms
+- Update existing POA&Ms
+
+**Phase 4 (T+45 to T+75): SME Deep Dive & Implementation**
+- Full configuration review against new benchmark
+- System hardening implementation
+- Compliance validation
+
+**Phase 5 (Ongoing): 90-Day Continuous Compliance**
+- Regular configuration reviews
+- Deviation tracking
+- Remediation of findings
+- Continuous monitoring
 
 ### TRB Meeting Strategy
 - **3rd Tuesday**: Patch & IAVM TRB (Tactical - vulnerability response)
-- **4th Tuesday**: STIG Deep Dive TRB (Strategic - configuration management)
+- **Mid-Month (varies)**: STIG TRB for approvals (Strategic - configuration management)
 
 ---
 
@@ -305,6 +324,17 @@ See `CHANGELOG.md` for complete version history.
 
 ---
 
+## 🤝 Contributing
+
+Contributions are welcome! This tool is designed for the IA community. If you have suggestions, bug reports, or feature requests:
+
+1. **Open an Issue** describing your suggestion or problem
+2. **Fork the repository** if you want to contribute code
+3. **Submit a Pull Request** with clear description of changes
+4. **Follow PowerShell best practices** for code contributions
+
+---
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -313,7 +343,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-Hector L. Bones
+**Hector L. Bones**
+
+Created for Information Assurance professionals managing DISA IAVM processing and STIG compliance workflows.
 
 ---
 
