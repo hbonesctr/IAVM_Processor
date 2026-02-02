@@ -1,180 +1,165 @@
 # IAVM Processor .gitignore
-# Author: Hector L. Bones
 
-# ========================================
-# User-specific files and directories
-# ========================================
+# ============================================================================
+# PowerShell
+# ============================================================================
+*.ps1xml
+*.ps1.bak
+*_backup.ps1
 
-# Configuration files with user customizations
-IAVM_Config.json
-
-# Output directories
-**/IAVM_Output/
-C:/Temp/IAVM_Output/
-/output/
-/outputs/
-
-# User-specific test files
-test_*.xml
-test_*.zip
-sample_*.xml
-
-# ========================================
+# ============================================================================
 # Windows
-# ========================================
-
-# Windows thumbnail cache
+# ============================================================================
 Thumbs.db
 ehthumbs.db
-
-# Folder config file
 Desktop.ini
-
-# Recycle Bin
 $RECYCLE.BIN/
-
-# Windows shortcuts
+*.cab
+*.msi
+*.msm
+*.msp
 *.lnk
 
-# ========================================
-# PowerShell
-# ========================================
-
-# PowerShell module cache
-*.psm1.cache
-
-# PowerShell transcript logs
-PowerShell_transcript.*.txt
-
-# ========================================
-# Office temporary files
-# ========================================
-
-# Word
+# ============================================================================
+# Office Temporary Files
+# ============================================================================
 ~$*.doc*
-~$*.docx
-
-# Excel
 ~$*.xls*
-~$*.xlsx
-
-# PowerPoint
-~$*.ppt*
-~$*.pptx
-
-# Office temporary files
 *.tmp
+~$*.ppt*
+*.xlk
+.~lock.*
 
-# ========================================
-# Backup files
-# ========================================
+# ============================================================================
+# IAVM Processing Output
+# ============================================================================
+# Ignore actual IAVM data files and outputs
+*.xml
+*.zip
+*IAVM*.csv
+Complete_IAVM_Results.csv
+Summary_IAVM_Results.csv
+Monthly_Statistics.csv
+TRB_Eligible_Items.csv
+Priority_Items_CAT_I.csv
+Aged_Items.csv
 
-*.bak
-*.backup
-*~
-*.old
-*.orig
+# But keep example/test files
+!examples/**/*.xml
+!examples/**/*.csv
+!test/**/*.xml
+!test/**/*.csv
 
-# ========================================
-# Archives
-# ========================================
+# ============================================================================
+# User-specific Configuration
+# ============================================================================
+IAVM_Config.json.user
+*.local.json
+config.local.*
 
-# Don't track extracted IAVM files
-*.xml.bak
-*.zip.bak
+# But keep the template config
+!IAVM_Config.json
 
-# ========================================
-# Logs
-# ========================================
-
+# ============================================================================
+# Logs and Temp Files
+# ============================================================================
 *.log
 logs/
-*.log.*
+temp/
+tmp/
+output/
+*.cache
 
-# ========================================
+# ============================================================================
 # Development
-# ========================================
-
-# IDE specific files
+# ============================================================================
 .vscode/
+*.code-workspace
+.vs/
 .idea/
-*.swp
-*.swo
-*~
 
-# Debug output
-debug/
-Debug/
-debug.txt
-
-# ========================================
+# ============================================================================
 # Git
-# ========================================
+# ============================================================================
+*.orig
+*.patch
+*.diff
 
-# Git attributes
-# .gitattributes should be tracked, so this is commented out
-# .gitattributes
+# ============================================================================
+# Package Managers
+# ============================================================================
+node_modules/
+packages/
+.nuget/
 
-# ========================================
+# ============================================================================
+# Build Artifacts
+# ============================================================================
+bin/
+obj/
+build/
+dist/
+release/
+
+# ============================================================================
+# Testing
+# ============================================================================
+test-results/
+coverage/
+*.test.ps1.xml
+
+# ============================================================================
+# Documentation Build
+# ============================================================================
+docs/_build/
+site/
+.docusaurus/
+
+# ============================================================================
 # macOS
-# ========================================
-
+# ============================================================================
 .DS_Store
 .AppleDouble
 .LSOverride
 
-# ========================================
+# ============================================================================
 # Linux
-# ========================================
-
+# ============================================================================
 *~
 .directory
 
-# ========================================
-# Project specific
-# ========================================
+# ============================================================================
+# Sensitive Data
+# ============================================================================
+# Never commit real IAVM data or sensitive info
+*sensitive*
+*classified*
+*cui*
+*.ckl
+*.cklb
+secrets.json
 
-# User's actual IAVM XML files (contain security data)
-/IAVMs/*.xml
-/IAVMs/*.zip
+# ============================================================================
+# Keep These Important Files
+# ============================================================================
+# Documentation
+!README.md
+!CHANGELOG.md
+!LICENSE
+!CONTRIBUTING.md
 
-# User's actual CSV outputs (may contain sensitive info)
-*.csv
+# Application files
+!IAVM_Processor_v2_4.ps1
+!Launch_IAVM_Processor_v2_4.bat
+!IAVM_Analysis_Template.xlsx
 
-# User-modified configs
-*_custom.json
-*_local.json
+# Documentation resources
+!docs/**/*.md
+!docs/**/*.docx
+!docs/**/*.pdf
+!docs/**/*.png
+!docs/**/*.jpg
 
-# Test outputs
-test_output/
-testing/
-
-# Documentation builds (if we add any)
-/docs/build/
-/docs/_build/
-
-# Version-specific builds
-/builds/
-/releases/
-
-# ========================================
-# Exceptions - Files to ALWAYS include
-# ========================================
-
-# Keep sample/template files
-!config/IAVM_Config.json
-!examples/**/*.csv
-!examples/**/*.xml
-
-# Keep documentation examples
-!docs/examples/*.csv
-!docs/screenshots/*.png
-
-# ========================================
-# Notes
-# ========================================
-
-# Personal notes that shouldn't be committed
-NOTES.txt
-TODO.txt
-PRIVATE.md
+# Examples and templates
+!examples/
+!templates/
