@@ -801,8 +801,8 @@ function Generate-CSVOutputs {
         $summaryCsvPath = Join-Path $OutputDir "IAVM_Summary_Metrics_$timestamp.csv"
         $summary = [PSCustomObject]@{
             TotalIAVMs = $Global:ProcessedIAVMs.Count
-            TypeA = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "A" }).Count
-            TypeB = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "B" }).Count
+            TypeA = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "IAVA" }).Count
+            TypeB = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "IAVB" }).Count
             Critical = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "CRITICAL" }).Count
             High = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "HIGH" }).Count
             Medium = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "MEDIUM" }).Count
@@ -867,8 +867,8 @@ function Display-Results {
     
     # Calculate statistics
     $total = $Global:ProcessedIAVMs.Count
-    $typeA = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "A" }).Count
-    $typeB = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "B" }).Count
+    $typeA = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "IAVA" }).Count
+    $typeB = ($Global:ProcessedIAVMs | Where-Object { $_.Type -eq "IAVB" }).Count
     $critical = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "CRITICAL" }).Count
     $high = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "HIGH" }).Count
     $medium = ($Global:ProcessedIAVMs | Where-Object { $_.PriorityLevel -eq "MEDIUM" }).Count
